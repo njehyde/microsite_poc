@@ -4,9 +4,9 @@ const handler = async (event) => {
     const subject = event.queryStringParameters.name || 'World'
     return {
       statusCode: 200,
-      body: { 
+      body: JSON.stringify({ 
         message: `Hello ${subject}`,
-      },
+      }),
       // // more keys you can return:
       // headers: { "headerName": "headerValue", ... },
       // isBase64Encoded: true,
