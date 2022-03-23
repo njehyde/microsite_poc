@@ -1,5 +1,5 @@
 const getData = async () => {
-  return await fetch('/.netlify/functions/get-data').json();
+  return await fetch('/.netlify/functions/get-data');
 };
 
 const rootEl = document.getElementById('root');
