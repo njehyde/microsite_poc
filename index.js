@@ -3,7 +3,7 @@ const getData = async () => {
 };
 
 const rootEl = document.getElementById('root');
-const data = getData();
+const data = await getData();
 const newContent = document.createTextNode(JSON.stringify(data));
 
 rootEl.appendChild(newContent);
