@@ -6,6 +6,7 @@
   const rootEl = document.getElementById('root');
   const data = await getData();
   const body = data.body;
+  const jsonResponse = await data.json();
   const newContent = document.createTextNode(JSON.stringify(data));
   
   rootEl.appendChild(newContent);
