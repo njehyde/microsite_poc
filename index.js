@@ -1,12 +1,9 @@
 (async () => {
-  const getData = () => {
-    return fetch('/.netlify/functions/get-data');
-  };
+  const getData = async () => fetch('/api/get-data').then((response) => response.json());
   
   const rootEl = document.getElementById('root');
   const data = await getData();
-  const jsonResponse = await data.json();
-  const newContent = document.createTextNode(jsonResponse.message);
+  const newContent = document.createTextNode(JSON.stringify(data));
   
   rootEl.appendChild(newContent);
 })();
