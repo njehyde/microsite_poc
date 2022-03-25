@@ -1,0 +1,9 @@
+{
+  "name": "get-data",
+  "version": "1.0.0",
+  "main": "get-data.js",
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^3.2.3"
+  }
+}
