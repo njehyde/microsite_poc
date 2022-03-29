@@ -1,6 +1,16 @@
 import fetch from 'node-fetch';
 
-// Docs on event and context https://www.netlify.com/docs/functions/#the-handler-method
+const filterJobs = (jobs, departments) => (
+  jobs.filter((job) => {
+    // const { department_hierarchy } = job;
+    // const lastItem = department_hierarchy[department_hierarchy.length - 1];
+    // return departments.includes(lastItem?.name);
+    return !!job?.department_hierarchy.find((item) => (
+      departments.includes(item?.name)
+    ));
+  })
+);
+
 const getNextPage = async (paging) => {
   const url = paging || 'https://immediate-media-co.workable.com/spi/v3/jobs?state=published&include_fields=description';
 
@@ -14,7 +24,7 @@ const getNextPage = async (paging) => {
   return response.json();
 }
 
-const getData = async () => {
+const getData = async (departments) => {
   const data = await getNextPage(); 
   let jobs = data.jobs;
   let next;
@@ -29,18 +39,17 @@ const getData = async () => {
     next = nextPageData?.paging?.next;
   }
 
-  return jobs;
+  return filterJobs(jobs, departments);
 }
 
 exports.handler = async function(event, context) {
   try {
-    // const subject = event.queryStringParameters.name || 'World'
-    const jobs = await getData();
+    const departments = event.queryStringParameters.departments || []
+    const jobs = await getData(departments);
 
     return {
       statusCode: 200,
-      body: JSON.stringify(jobs),
-      // // more keys you can return:
+      body: JSON.stringify({ jobs, departments: departments.split(',') }),
       // headers: { "headerName": "headerValue", ... },
       // isBase64Encoded: true,
     }
