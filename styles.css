@@ -15,6 +15,19 @@ body {
 }
 
 #root {
-	background-color: azure;
 	min-height: 100px;
+}
+
+.jobs-listing {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.jobs-total {
+	width: 100%;
+}
+
+.item {
+	flex: 0 0 33.3%;
+	max-width: 33.3%;
 }

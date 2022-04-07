@@ -1,5 +1,38 @@
 import fetch from 'node-fetch';
 
+const getFeedHTML = (feed) => {
+  const rolesHTML = feed.map((item) => {
+    const role = {
+      location: item?.location?.city,
+      url: item?.url,
+      title: item?.title,
+    };
+
+    return getRoleHTML(role);
+  }).join('');
+
+  return `
+    <div class="jobs-listing">
+      <h4 class="jobs-total">${feed.length} active roles</h4>
+      ${rolesHTML}
+    </div>
+  `;
+};
+
+const getRoleHTML = ({ location, title, url }) => `
+  <div class="item">
+    <div class="inner">
+      <div class="info">
+        <p class="secondary-heading">${location}</p>
+        <a href="${url}" class="heading" target="_blank">${title}</a>
+        <p>
+          <a href="${url}" class="link" target="_blank">View and Apply</a>
+        </p>
+      </div>
+    </div>
+  </div>
+`;
+
 const filterJobs = (jobs, departments) => (
   jobs.filter((job) => {
     // const { department_hierarchy } = job;
@@ -46,10 +79,12 @@ exports.handler = async function(event, context) {
   try {
     const departments = event.queryStringParameters.departments || []
     const jobs = await getData(departments);
+    const feedHTML = getFeedHTML(jobs);
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ jobs, departments: departments.split(',') }),
+      body: feedHTML,
+      // body: JSON.stringify({ jobs, departments: departments.split(',') }),
       // headers: { "headerName": "headerValue", ... },
       // isBase64Encoded: true,
     }
