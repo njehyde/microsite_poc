@@ -18,16 +18,16 @@ body {
 	min-height: 100px;
 }
 
-.jobs-listing {
+.jobs__feed {
 	display: flex;
 	flex-wrap: wrap;
 }
 
-.jobs-total {
+.jobs__active-roles-header {
 	width: 100%;
 }
 
-.item {
+.job {
 	flex: 0 0 33.3%;
 	max-width: 33.3%;
 }
